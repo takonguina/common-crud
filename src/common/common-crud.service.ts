@@ -20,6 +20,14 @@ export class CommonCrudService<T> {
     return this.items.find((item) => (item as any).id === parsedId);
   }
 
+  filter(query: Record<string, any>): T[] {
+    return this.items.filter((item) =>
+      Object.entries(query).every(
+        ([key, value]) => (item as any)[key] == value,
+      ),
+    );
+  }
+
   remove(id: number): boolean {
     const index = this.items.findIndex((item) => (item as any).id === id);
     if (index !== -1) {
